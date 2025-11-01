@@ -68,7 +68,6 @@ function sample_nucleon_position()
 end
 
 # Plot Woods-Saxon distribution
-println("Plotting Woods-Saxon distribution...")
 r_range = range(0, 15, length=500)
 rho_vals = woods_saxon_density.(r_range)
 prob_vals = woods_saxon_prob.(r_range)
@@ -99,11 +98,9 @@ function generate_nucleus(A=208)
     return hcat(nucleons...)'  # Return as matrix (A × 3)
 end
 
-println("\nGenerating Pb nucleus...")
 nucleus_A = generate_nucleus(A)
 
 # 3D visualization of one nucleus
-println("Creating 3D visualization of nucleus...")
 p2 = scatter(nucleus_A[:, 1], nucleus_A[:, 2], nucleus_A[:, 3],
              markersize=3, alpha=0.6, color=:blue,
              xlabel="x (fm)", ylabel="y (fm)", zlabel="z (fm)",
@@ -115,7 +112,6 @@ display(p2)
 savefig(p2, "fig2_nucleus_3d.png")
 
 # Transverse view of nucleus (x-y plane)
-println("Creating transverse view of nucleus...")
 p2_transverse = scatter(nucleus_A[:, 1], nucleus_A[:, 2],
                         markersize=4, alpha=0.6, color=:blue,
                         xlabel="x (fm)", ylabel="y (fm)",
@@ -236,8 +232,6 @@ display(p3)
 savefig(p3, "fig3_collision_3d.png")
 
 # Transverse view of collision (x-y plane)
-println("Creating transverse view of collision...")
-
 # Calculate shift for plotting
 dx_plot = b_sample * cos(psi_sample)
 dy_plot = b_sample * sin(psi_sample)
@@ -362,9 +356,7 @@ Phi3_hist = Float64[]
 # Progress indicator
 progress_interval = N_events ÷ 20
 
-println("\n" * "="^70)
 println("Starting Monte Carlo simulation with $N_events events...")
-println("="^70)
 
 for i in 1:N_events
     if i % progress_interval == 0
@@ -403,17 +395,13 @@ for i in 1:N_events
     end
 end
 
-println("\nSimulation complete!")
 println("Total events with N_coll > 0: $(length(N_coll_hist))")
 println("Total events with eccentricity data: $(length(eps2_hist))")
 
 # ============================================
 # 7. Summary Statistics
 # ============================================
-
-println("\n" * "="^70)
 println("SUMMARY STATISTICS")
-println("="^70)
 println("N_coll:")
 println("  Mean: $(round(mean(N_coll_hist), digits=2))")
 println("  Max:  $(maximum(N_coll_hist))")
@@ -427,13 +415,10 @@ println("  <eps_2> = $(round(mean(eps2_hist), digits=3))")
 println("  <eps_3> = $(round(mean(eps3_hist), digits=3))")
 # println("  <eps_4> = $(round(mean(eps4_hist), digits=3))")
 # println("  <eps_5> = $(round(mean(eps5_hist), digits=3))")
-println("="^70)
 
 # ============================================
 # 8. Basic Distributions (Figs 4-5)
 # ============================================
-
-println("\nCreating basic distribution plots...")
 
 # Figure 4: N_coll histogram
 p4 = histogram(N_coll_hist, bins=100, 
@@ -459,7 +444,6 @@ savefig(p5, "fig5_npart_distribution.png")
 # 9. N_part and N_coll vs Impact Parameter
 # ============================================
 
-println("\nCreating N_part and N_coll vs b plots...")
 
 # Bin the data by impact parameter
 b_bin_edges = range(0, bmax, length=21)  # 20 bins
@@ -529,8 +513,6 @@ savefig(p8, "fig8_npart_ncoll_vs_b.png")
 # 10. 2D Histogram: N_part vs b
 # ============================================
 
-println("\nCreating 2D histogram...")
-
 # Figure 9: 2D histogram
 p9 = histogram2d(b_hist, N_part_hist,
                  bins=(50, 50),
@@ -547,14 +529,6 @@ plot!(p9, [0], [416],
       marker=:star, markersize=10, color=:red, 
       label="Maximum (N_part = 416)", legend=:bottomleft)
 
-# Add text annotation for central collisions
-annotate!(p9, 2, 400, 
-          text("Central collisions\n(b ≈ 0)", :red, :left, 9))
-
-# Add text annotation for peripheral collisions  
-annotate!(p9, 15, 100,
-          text("Peripheral collisions\n(large b, common)", :white, :center, 9))
-
 display(p9)
 savefig(p9, "fig9_npart_vs_b_2dhist.png")
 
@@ -570,14 +544,9 @@ println("  Fraction of events with b < $(round(b_central_10percent, digits=2)) f
 # 11. Eccentricity Analysis Plots
 # ============================================
 
-println("\nCreating eccentricity analysis plots...")
-
 # Calculate means for later use
 mean_eps2 = mean(eps2_hist)
 mean_eps3 = mean(eps3_hist)
-
-
-println("\nCreating eps vs b plots...")
 
 # Calculate correlation coefficients
 corr_eps2_b = cor(eps2_hist, b_hist)
@@ -631,8 +600,6 @@ savefig(p11, "fig11_eps3_vs_b.png")
 # ============================================
 # 12. Eccentricity vs N_part (Scatter plots with binned averages)
 # ============================================
-
-println("\nCreating eps vs N_part scatter plots...")
 
 # Match up the data
 valid_indices = 1:min(length(N_part_hist), length(eps2_hist))
@@ -689,9 +656,6 @@ plot!(p13, Npart_centers_scatter_3, eps3_Npart_scatter, linewidth=3, color=:dark
 display(p13)
 savefig(p13, "fig13_eps3_vs_npart.png")
 
-
-println("\nCreating participant plane angle plots...")
-
 # Figure 14: Phi_2 and Phi_3 distributions
 p14 = histogram(Phi2_hist, bins=50, normalize=:pdf,
                 xlabel=L"\Phi_n", ylabel="Probability Density",
@@ -710,8 +674,6 @@ savefig(p14, "fig14_participant_plane_angles.png")
 # ============================================
 # 15. N_coll vs b 2D Histogram
 # ============================================
-
-println("\nCreating N_coll vs b 2D histogram...")
 
 # Figure 15: 2D histogram for N_coll vs b
 p15 = histogram2d(b_hist, N_coll_hist,

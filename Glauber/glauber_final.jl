@@ -72,7 +72,7 @@ r_range = range(0, 15, length=500)
 rho_vals = woods_saxon_density.(r_range)
 prob_vals = woods_saxon_prob.(r_range)
 
-# Normalize the Woods-Saxon density
+# Peak Normalized Woods-Saxon density and Radial Distribution Function
 rho_normalized = rho_vals ./ maximum(rho_vals)
 prob_normalized = prob_vals ./ maximum(prob_vals)
 

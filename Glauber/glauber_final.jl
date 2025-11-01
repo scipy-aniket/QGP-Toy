@@ -521,8 +521,7 @@ p9 = histogram2d(b_hist, N_part_hist,
                  title="Distribution of Participants vs Impact Parameter",
                  colorbar_title="Event Count",
                  colorbar_titlefontsize=8,
-                 color=:plasma, dpi=300,
-                 right_margin=5Plots.mm)
+                 color=:plasma, dpi=300)
 
 # Add annotations
 plot!(p9, [0], [416], 
@@ -683,8 +682,7 @@ p15 = histogram2d(b_hist, N_coll_hist,
                  title="Distribution of Binary Collisions vs Impact Parameter",
                  colorbar_title="Event Count",
                  colorbar_titlefontsize=8,
-                 color=:plasma, dpi=300,
-                 right_margin=5Plots.mm)  # Add right margin to prevent overlap
+                 color=:plasma, dpi=300)
 
 display(p15)
 savefig(p15, "fig15_ncoll_vs_b_2dhist.png")

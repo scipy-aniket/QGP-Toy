@@ -12,7 +12,7 @@ This code simulates nucleus-nucleus collisions using the Glauber model to calcul
 
 ## Requirements
 
-- Julia (tested on 1.x)
+- Julia (tested on 1.11.2)
 - Required packages:
   ```julia
   using Plots
